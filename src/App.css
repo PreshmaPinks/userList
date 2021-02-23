@@ -36,3 +36,23 @@
     transform: rotate(360deg);
   }
 }
+
+.searchbutton
+{
+  background-color: rgb(22, 191, 221);
+  border-radius: 3px;
+  border: 0px;
+}
+
+.inputbox
+{
+  border-radius: 3px;
+  border: 1px solid rgb(22, 191, 221) ;
+}
+
+
+td{
+  border: 10px solid black;
+  padding: 15px;
+  width: 50px;
+}
