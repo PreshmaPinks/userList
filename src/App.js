@@ -4,33 +4,50 @@ import { useEffect, useState } from 'react';
 
 function App() {
   const [data, setData]=useState(null);
+  const [inputData, setInput] = useState("");
+  const [intitial, setInitial] = useState("");
   useEffect(()=>{
     fetch("https://reqres.in/api/users")
     .then(response=>response.json())
     .then(response=>{
-      console.log(response.data)
       setData(response.data)
-      console.log(response.data)
+      setInitial(response.data);
     })
-  },[]);
+  },[]); 
+
+  const setChange=(e) => {
+    if(e.target.value==""){
+      setData(intitial);
+    }
+    setInput(e.target.value)
+  }
+
+
+  const search = () => {
+    setData(data.filter((item) => {
+      return inputData.toLowerCase() == item.first_name.toLowerCase()
+    }))
+  }
+  
   return (
     <>
     <div>
-    <input class="inputbox" type="text"/>
-    <button class="searchbutton">Search</button>
+    <input  type="text" value={inputData} onChange={setChange} placeholder="Search by first name"/>
+    <button  onClick={search}>Search</button>
     </div>
     <div>
    
     <table >
+    <tbody>
    
       {
-        data && data.map((item)=>{
+        data && data.map((item,index)=>{
           return (
-            <>
+           
               
-            <tr> 
-              <td class="tddiv"> 
-              <div class="imagediv"><img src={item.avatar}></img></div>
+            <tr key={index}> 
+              <td> 
+              <div><img src={item.avatar}></img></div>
               </td>
             
             <td>
@@ -39,12 +56,12 @@ function App() {
               <div>FirstName:{item.first_name}   LastName:{item.last_name}</div>
               </td>
               </tr>
-                </>
+              
               
               );                   
         })
       }
-      
+      </tbody>
       </table>
     </div>
     </>
